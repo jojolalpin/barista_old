@@ -76,3 +76,5 @@ staticfiles/
 
 .cache/
 
+/docs/backlog.ods
+/docs/.~lock.backlog.ods#

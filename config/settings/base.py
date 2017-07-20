@@ -56,7 +56,12 @@ LOCAL_APPS = [
     # custom users app
     'barista.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    'barista.front.apps.FrontConfig',
+    'organizations',
 ]
+
+ORGS_SLUGFIELD = 'django_extensions.db.fields.AutoSlugField'
+
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

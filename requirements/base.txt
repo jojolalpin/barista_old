@@ -52,3 +52,6 @@ redis>=2.10.5
 
 
 # Your custom requirements go here
+channels==1.1.6
+asgi_redis==1.4.2
+websocket-client==0.44.0

@@ -7,7 +7,7 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-import environ
+import environ, os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (barista/config/settings/base.py - 3 = barista/)
 APPS_DIR = ROOT_DIR.path('barista')
@@ -56,8 +56,10 @@ LOCAL_APPS = [
     # custom users app
     'barista.users.apps.UsersConfig',
     # Your stuff: custom apps go here
-    'barista.front.apps.FrontConfig',
+    #'barista.front',
     'organizations',
+    'channels',
+    'barista.chat',
 ]
 
 ORGS_SLUGFIELD = 'django_extensions.db.fields.AutoSlugField'
@@ -276,3 +278,18 @@ ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+redis_host = os.environ.get('REDIS_HOST', 'localhost')
+
+# Channel layer definitions
+# http://channels.readthedocs.org/en/latest/deploying.html#setting-up-a-channel-backend
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(redis_host, 6379)],
+        },
+        "ROUTING": "config.routing.channel_routing",
+    },
+}
+

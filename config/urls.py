@@ -7,8 +7,17 @@ from django.views import defaults as default_views
 
 from organizations.backends import invitation_backend
 
+from allauth.account.views import LoginView, LogoutView
+from django.contrib.auth.views import login, logout
+
+from barista.chat.views import index
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
+
+    url(r'^$', index),
+    #url(r'^accounts/login/$', login),
+    #url(r'^accounts/logout/$', logout),
+
+    url(r'home/^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     # Django Admin, use {% url 'admin:index' %}
@@ -16,13 +25,17 @@ urlpatterns = [
 
     # User management
     url(r'^users/', include('barista.users.urls', namespace='users')),
+
+    #url(r'^accounts/login/$', LoginView.as_view(), name='login'),  # Reverse needed
+    #url(r'^accounts/logout/$', LogoutView.as_view(), name='logout'),  # Reverse needed
+
     url(r'^accounts/', include('allauth.urls')),
 
     # Your stuff: custom urls includes go here
     url(r'^accounts/', include('organizations.urls')),
     url(r'^invitations/', include(invitation_backend().get_urls())),
 
-    url(r'^front/', include('barista.front.urls')),
+    #url(r'^chat/', index), #include('barista.front.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

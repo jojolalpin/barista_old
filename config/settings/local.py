@@ -8,8 +8,9 @@ Local settings
 - Add Django Debug Toolbar
 - Add django-extensions as app
 """
-
 from .base import *  # noqa
+
+ALLOWED_HOSTS += ['*']
 
 # DEBUG
 # ------------------------------------------------------------------------------
